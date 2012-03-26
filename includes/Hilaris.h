@@ -6,6 +6,7 @@
 
 class Camera;
 class Image;
+class DeviceIO;
 
 #include "oscar.h"
 #include "Camera.h"

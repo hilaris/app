@@ -16,10 +16,10 @@ SOURCES := $(patsubst sources/%.cpp,%,$(wildcard sources/*.cpp))
 all: host target
 
 host: $(addsuffix .o, $(addprefix build/host_, $(SOURCES)))
-	$(LD_HOST) -o app_host $^ -Llibrary -losc_host -lhilaris_host
+	$(LD_HOST) -o app_host $^ -Llibrary -lhilaris_host -losc_host
 
 target: $(addsuffix .o, $(addprefix build/target_, $(SOURCES)))
-	$(LD_TARGET) -o app_target $^ -Llibrary -losc_target -lhilaris_target
+	$(LD_TARGET) -o app_target  $^ -Llibrary -lhilaris_target -losc_target
 	
 build/target_%.o: sources/%.cpp
 	$(CC_TARGET) $(CCFLAG_T) $? -o $@
@@ -28,7 +28,7 @@ build/host_%.o: sources/%.cpp
 	$(CC_HOST) $(CCFLAG_H) $? -o $@
 
 clean:
-	rm -f $(BUILD)*
+	rm -f $(BUILD)/*
 	rm -f app_*
 
 
