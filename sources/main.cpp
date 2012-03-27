@@ -1,5 +1,6 @@
 
 #include "Hilaris.h"
+#include "StreamServer.h"
 
 int main(){
 	
@@ -7,13 +8,31 @@ int main(){
 	
 	hilaris.setConsoleLogLevel(DEBUG);
 	
+	/*
 	Camera* camera = hilaris.getCamera();
 	
 	OscLog(DEBUG, "Error: %d\n", camera->getLastError());
 	
 	Image* image = camera->captureImage();
+		
+	image->save("/home/httpd/1.bmp");
+	
+	image->filter(&GAUSS3X3);
+	
+	image->save("/home/httpd/2.bmp");
 	
 	printf("%p", image);
+	*/
+	
+	StreamServer srv;
+	
+	srv.start();
+	
+	sleep(5);
+	
+	srv.stop();
+	
+	
 	
 	return 0;
 }
