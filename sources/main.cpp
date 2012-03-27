@@ -2,13 +2,13 @@
 #include "Hilaris.h"
 
 int main(){
-	Hilaris h;
 	
-	h.setConsoleLogLevel(DEBUG);
+	Hilaris hilaris;
+	Camera* camera = hilaris.getCamera();
 	
-	OscLog(DEBUG, "bluppediblupp\n");
+	Image* image = camera->captureImage();
 	
+	printf("%p", image);
 	
-
 	return 0;
 }

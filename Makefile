@@ -3,9 +3,9 @@ CC_HOST = g++
 CC_TARGET = bfin-uclinux-g++
 
 CCFLAG_T = -Wall -c -Iincludes/oscar -Iincludes -DOSC_TARGET
-CCFLAG_H = -Wall -c -Iincludes/oscar -Iincludes -DOSC_HOST
+CCFLAG_H = -Wall -c -m32 -Iincludes/oscar -Iincludes -DOSC_HOST
 
-LD_HOST := $(CC_HOST) -fPIC
+LD_HOST := $(CC_HOST) -fPIC -m32
 LD_TARGET := $(CC_TARGET) -elf2flt="-s 1048576"
 
 BUILD = build
