@@ -28,7 +28,15 @@ int main(){
 	
 	srv.start();
 	
-	sleep(5);
+	sleep(1);
+	
+	srv.message = "bliiiiiiiiip";
+	
+	sleep(1);
+	
+	srv.message = "huhuuuuu";
+	
+	sleep(1);
 	
 	srv.stop();
 	
