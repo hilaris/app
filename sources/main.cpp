@@ -1,6 +1,7 @@
 
 #include "Hilaris.h"
 #include "StreamServer.h"
+#include "Image.h"
 
 int main(){
 	
@@ -24,7 +25,7 @@ int main(){
 	printf("%p", image);
 	*/
 	
-	StreamServer srv;
+	StreamServer srv(5);
 	
 	srv.start();
 	
@@ -36,7 +37,9 @@ int main(){
 		
 		sprintf(msg, "message nr: %d", i++);
 		
-		srv.message = msg;
+		Image img(752, 480, OSC_PICTURE_BGR_24);
+		
+		srv.insertImage(img);
 		usleep(4000);
 	}
 	
