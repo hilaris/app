@@ -8,10 +8,11 @@ int main(){
 	Hilaris hilaris;
 	
 	hilaris.setConsoleLogLevel(DEBUG);
+	hilaris.setFileLogLevel(NONE);
 	
-	/*
 	Camera* camera = hilaris.getCamera();
-	
+
+	/*	
 	OscLog(DEBUG, "Error: %d\n", camera->getLastError());
 	
 	Image* image = camera->captureImage();
@@ -25,7 +26,7 @@ int main(){
 	printf("%p", image);
 	*/
 	
-	StreamServer srv(5);
+	StreamServer srv;
 	
 	srv.start();
 	
@@ -36,16 +37,13 @@ int main(){
 		char msg[100];
 		
 		sprintf(msg, "message nr: %d", i++);
-		
-		Image img(752, 480, OSC_PICTURE_BGR_24);
-		
-		srv.insertImage(img);
+		Image*  image = camera->captureImage();
+
+		srv.insertImage(*image);
 		usleep(4000);
 	}
 	
 	srv.stop();
-	
-	
 	
 	return 0;
 }
