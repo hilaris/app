@@ -11,11 +11,17 @@ int main(){
 	hilaris.setFileLogLevel(NONE);
 	
 	Camera* camera = hilaris.getCamera();
-	Image*  image = camera->captureImage();
+	//Image*  image = camera->captureImage();
 	
-	image->toGreyscale();
+	//image->toGreyscale();
 	
-	image->save("foo.bmp");
+	//image->save("foo.bmp");
+	
+	StreamServer srv(camera);
+	
+	srv.start();
+	
+	while(1);
 	
 	return 0;
 }
