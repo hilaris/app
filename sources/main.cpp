@@ -28,15 +28,17 @@ int main(){
 	
 	srv.start();
 	
-	sleep(1);
+	int i = 0;
 	
-	srv.message = "bliiiiiiiiip";
-	
-	sleep(1);
-	
-	srv.message = "huhuuuuu";
-	
-	sleep(1);
+	while(1)
+	{
+		char msg[100];
+		
+		sprintf(msg, "message nr: %d", i++);
+		
+		srv.message = msg;
+		usleep(4000);
+	}
 	
 	srv.stop();
 	
