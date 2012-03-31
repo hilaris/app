@@ -7,8 +7,7 @@ int main(){
 	
 	Hilaris hilaris;
 	
-	hilaris.setConsoleLogLevel(NONE);
-	hilaris.setFileLogLevel(NONE);
+	hilaris.setConsoleLogLevel(DEBUG);
 	
 	Camera* camera = hilaris.getCamera();
 	//Image*  image = camera->captureImage();
