@@ -9,7 +9,10 @@ int main(){
 	
 	hilaris.setConsoleLogLevel(DEBUG);
 	
-	Camera* camera = hilaris.getCamera();
+	Camera* camera = hilaris.getCamera(OSC_PICTURE_GREYSCALE);
+	
+	camera->setAutoExposure(true);
+	
 	//Image*  image = camera->captureImage();
 	
 	//image->toGreyscale();
