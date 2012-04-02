@@ -2,16 +2,20 @@
 #include "Hilaris.h"
 #include "StreamServer.h"
 #include "Image.h"
+#include "BGRImageFactory.h"
 
 int main(){
 	
 	Hilaris hilaris;
-	
 	hilaris.setConsoleLogLevel(DEBUG);
 		
 	Camera* camera = hilaris.getCamera(OSC_PICTURE_GREYSCALE);
-	
 	camera->setAutoExposure(true);	
+	
+	RawImage* img   = camera->captureImage();
+	BGRImage  image = BGRImageFactory::getDebayered(img);
+	
+	image.save("/home/httpd/blupp.bmp");
 	
 	//Image*  image = camera->captureImage();
 	
@@ -19,11 +23,11 @@ int main(){
 	
 	//image->save("foo.bmp");
 	
-	StreamServer srv(camera);
+	//StreamServer srv(camera);
 	
-	srv.start();
+	//srv.start();
 	
-	while(1);
+	//while(1);
 	
 	return 0;
 }
