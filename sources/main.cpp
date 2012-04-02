@@ -8,11 +8,10 @@ int main(){
 	Hilaris hilaris;
 	
 	hilaris.setConsoleLogLevel(DEBUG);
+		
+	Camera* camera = hilaris.getCamera(OSC_PICTURE_GREYSCALE);
 	
-	Camera* camera = hilaris.getCamera(0, 0, 13, 13,OSC_PICTURE_GREYSCALE);
-	
-	camera->setAutoExposure(true);
-	
+	camera->setAutoExposure(true);	
 	
 	//Image*  image = camera->captureImage();
 	
