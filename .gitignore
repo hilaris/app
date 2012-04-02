@@ -1,3 +1,4 @@
 app_host
 app_target*
-library/*
+gpio_*
+osc_*
