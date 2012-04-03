@@ -5,6 +5,7 @@
 #include "Image.h"
 #include "GreyscaleImageFactory.h"
 #include "BGRImageFactory.h"
+#include "BinaryImageFactory.h"
 
 int main(){
 	
@@ -15,11 +16,11 @@ int main(){
 	camera->setAutoExposure(true);	
 	
 	RawImage* img  = camera->captureImage();
-	GreyscaleImage image = GreyscaleImageFactory::getFastDebayered(img);
+	BinaryImage image = BinaryImageFactory::getFastDebayered(img, 90, false);
 	
 	printf("width %d\n", image.getWidth());
 	
-	image.save("meep.bmp");
+	image.save("meepbin.bmp");
 
 	
 	//Image* image = camera->captureImage();
