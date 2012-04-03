@@ -18,16 +18,11 @@ int main(){
 	RawImage* img  = camera->captureImage();
 	BinaryImage bin = BinaryImageFactory::getFastDebayered(img);
 	
-	bin.save("meep_before.bmp");
+	bin.label();
+	bin.drawCentroid();
+	bin.drawBoundingBox();
 	
-	bin.erode(&DISK8);
-	
-	bin.save("meep_eroded.bmp");
-	
-	BinaryImage bin2 = BinaryImageFactory::getFastDebayered(img);
-	bin2.dilate(&DISK8);
-	
-	bin2.save("meep_dilated.bmp");
+	bin.save("meep_centroid.bmp");
 
 	
 	//Image* image = camera->captureImage();
