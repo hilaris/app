@@ -17,7 +17,11 @@ int main(){
 	
 	image.save("/home/httpd/blupp.bmp");
 	
-	//Image*  image = camera->captureImage();
+	Image arr[4];
+	
+	arr[0] = image;
+	
+	//Image* image = camera->captureImage();
 	
 	//image->toGreyscale();
 	
