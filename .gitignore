@@ -2,3 +2,4 @@ app_host
 app_target*
 gpio_*
 osc_*
+*.bmp
