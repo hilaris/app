@@ -1,7 +1,9 @@
 
+#include "oscar.h"
 #include "Hilaris.h"
 #include "StreamServer.h"
 #include "Image.h"
+#include "GreyscaleImageFactory.h"
 #include "BGRImageFactory.h"
 
 int main(){
@@ -12,14 +14,13 @@ int main(){
 	Camera* camera = hilaris.getCamera(OSC_PICTURE_GREYSCALE);
 	camera->setAutoExposure(true);	
 	
-	RawImage* img   = camera->captureImage();
-	BGRImage  image = BGRImageFactory::getBilinearDebayered(img);
+	RawImage* img  = camera->captureImage();
+	GreyscaleImage image = GreyscaleImageFactory::getFastDebayered(img);
+	
+	printf("width %d\n", image.getWidth());
 	
 	image.save("meep.bmp");
-	
-	Image arr[4];
-	
-	arr[0] = image;
+
 	
 	//Image* image = camera->captureImage();
 	
@@ -32,6 +33,9 @@ int main(){
 	//srv.start();
 	
 	//while(1);
+
+	//GreyscaleImage GreyscaleImageFactory::getVectorDebayered(RawImage* raw)
+	//GreyscaleImage GreyscaleImageFactory::getHalfsizeDebayered(RawImage* raw)
 	
 	return 0;
 }
