@@ -3,6 +3,7 @@
 #include "Hilaris.h"
 #include "StreamServer.h"
 #include "Image.h"
+#include "BinaryImageFactory.h"
 #include "GreyscaleImageFactory.h"
 #include "BGRImageFactory.h"
 
@@ -15,11 +16,9 @@ int main(){
 	camera->setAutoExposure(true);	
 	
 	RawImage* img  = camera->captureImage();
-	GreyscaleImage image = GreyscaleImageFactory::getFastDebayered(img);
+	BinaryImage bin = BinaryImageFactory::getFastDebayered(img);
 	
-	printf("width %d\n", image.getWidth());
-	
-	image.save("meep.bmp");
+	bin.save("meep.bmp");
 
 	
 	//Image* image = camera->captureImage();
