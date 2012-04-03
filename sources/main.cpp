@@ -16,14 +16,18 @@ int main(){
 	camera->setAutoExposure(true);	
 	
 	RawImage* img  = camera->captureImage();
-	GreyscaleImage grey = GreyscaleImageFactory::getFastDebayered(img);
+	BinaryImage bin = BinaryImageFactory::getFastDebayered(img);
 	
-	if(!grey.filter(&MEDIAN5X5))
-	{
-		OscLog(DEBUG, "FOOOOOOOOOOOOOOOO!!!!!");
-	}
+	bin.save("meep_before.bmp");
 	
-	grey.save("meep.bmp");
+	bin.erode(&DISK8);
+	
+	bin.save("meep_eroded.bmp");
+	
+	BinaryImage bin2 = BinaryImageFactory::getFastDebayered(img);
+	bin2.dilate(&DISK8);
+	
+	bin2.save("meep_dilated.bmp");
 
 	
 	//Image* image = camera->captureImage();
