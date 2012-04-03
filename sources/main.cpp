@@ -13,7 +13,7 @@ int main(){
 	camera->setAutoExposure(true);	
 	
 	RawImage* img   = camera->captureImage();
-	BGRImage  image = BGRImageFactory::getBilinearDebayered(img);
+	BGRImage  image = BGRImageFactory::getHalfsizeDebayered(img);
 	
 	image.save("meep.bmp");
 	
