@@ -16,24 +16,14 @@ int main(){
 	camera->setAutoExposure(true);	
 	
 	RawImage* img  = camera->captureImage();
-	BGRImage bin = BGRImageFactory::getFastDebayered(img);
+	GreyscaleImage grey = GreyscaleImageFactory::getFastDebayered(img);
 	
-	for(int i = 0; i < bin.getHeight(); i ++)
+	if(!grey.filter(&MEDIAN5X5))
 	{
-		for(int j = 0; j < bin.getWidth(); j ++)
-		{
-			if(j % 3 == 0)
-			{
-				bin(i, j) = 255;
-			}
-			else
-			{
-				bin(i, j) = 0;
-			}
-		}
+		OscLog(DEBUG, "FOOOOOOOOOOOOOOOO!!!!!");
 	}
 	
-	bin.save("meep.bmp");
+	grey.save("meep.bmp");
 
 	
 	//Image* image = camera->captureImage();
