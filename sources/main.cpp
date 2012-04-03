@@ -16,7 +16,22 @@ int main(){
 	camera->setAutoExposure(true);	
 	
 	RawImage* img  = camera->captureImage();
-	BinaryImage bin = BinaryImageFactory::getFastDebayered(img);
+	BGRImage bin = BGRImageFactory::getFastDebayered(img);
+	
+	for(int i = 0; i < bin.getHeight(); i ++)
+	{
+		for(int j = 0; j < bin.getWidth(); j ++)
+		{
+			if(j % 3 == 0)
+			{
+				bin(i, j) = 255;
+			}
+			else
+			{
+				bin(i, j) = 0;
+			}
+		}
+	}
 	
 	bin.save("meep.bmp");
 
