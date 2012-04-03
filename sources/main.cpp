@@ -13,9 +13,9 @@ int main(){
 	camera->setAutoExposure(true);	
 	
 	RawImage* img   = camera->captureImage();
-	BGRImage  image = BGRImageFactory::getDebayered(img);
+	BGRImage  image = BGRImageFactory::getBilinearDebayered(img);
 	
-	image.save("/home/httpd/blupp.bmp");
+	image.save("meep.bmp");
 	
 	//Image*  image = camera->captureImage();
 	
