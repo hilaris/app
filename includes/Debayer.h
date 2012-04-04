@@ -7,6 +7,7 @@
 class Debayer
 {
 	public:
+		virtual enum EnOscPictureType getType() = 0;
 		virtual bool debayer(RawImage* raw, Image* image) = 0;
 	protected:
 		Debayer(){}

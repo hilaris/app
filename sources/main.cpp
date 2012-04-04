@@ -21,7 +21,6 @@ int main(){
 	
 	BGRImage i(img->getWidth()/2, img->getHeight()/2);
 	DebayerBGRFast debayer;
-
 	
 	if(debayer.debayer(img, &i))
 	{
