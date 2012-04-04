@@ -14,7 +14,7 @@ int main(){
 	Hilaris hilaris;
 	hilaris.setConsoleLogLevel(DEBUG);
 		
-	Camera* camera = hilaris.getCamera();
+	Camera* camera = hilaris.getCamera(200, 200);
 	camera->setAutoExposure(true);	
 	
 	BGRImage* img  = (BGRImage*)camera->captureImage();
