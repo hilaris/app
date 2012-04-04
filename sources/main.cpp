@@ -14,22 +14,13 @@ int main(){
 	Hilaris hilaris;
 	hilaris.setConsoleLogLevel(DEBUG);
 		
-	Camera* camera = hilaris.getCamera(OSC_PICTURE_GREYSCALE);
+	Camera* camera = hilaris.getCamera();
 	camera->setAutoExposure(true);	
 	
-	RawImage* img  = (RawImage*)camera->captureImage();
-	
-	BGRImage i(img->getWidth()/2, img->getHeight()/2);
-	DebayerBGRFast debayer;
-	
-	if(debayer.debayer(img, &i))
-	{
-		i.save("debayered.bmp");	
-	}
-	else
-	{
-		printf("failed\n");
-	}
+	BGRImage* img  = (BGRImage*)camera->captureImage();
+
+	img->save("debayered.bmp");	
+
 	
 
 	//bin.save("meep_centroid.bmp");
