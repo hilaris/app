@@ -7,6 +7,7 @@
 #include "GreyscaleImageFactory.h"
 #include "BGRImageFactory.h"
 #include "BinaryImageFactory.h"
+#include "DebayerBGRFast.h"
 
 int main(){
 	
@@ -16,16 +17,23 @@ int main(){
 	Camera* camera = hilaris.getCamera(OSC_PICTURE_GREYSCALE);
 	camera->setAutoExposure(true);	
 	
-	RawImage* img  = camera->captureImage();
-
-	BinaryImage bin = BinaryImageFactory::getFastDebayered(img);
+	RawImage* img  = (RawImage*)camera->captureImage();
 	
-	bin.label();
-	bin.drawCentroid();
-	bin.drawBoundingBox();
+	BGRImage i(img->getWidth()/2, img->getHeight()/2);
+	DebayerBGRFast debayer;
+
+	
+	if(debayer.debayer(img, &i))
+	{
+		i.save("debayered.bmp");	
+	}
+	else
+	{
+		printf("failed\n");
+	}
 	
 
-	bin.save("meep_centroid.bmp");
+	//bin.save("meep_centroid.bmp");
 	
 	//Image* image = camera->captureImage();
 	
