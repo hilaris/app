@@ -3,20 +3,20 @@
 #include "Hilaris.h"
 #include "StreamServer.h"
 #include "Image.h"
-#include "BGRImageFactory.h"
-#include "DebayerBGRStandard.h"
+#include "GreyscaleImageFactory.h"
+#include "DebayerGreyscaleFast.h"
 
 int main(){
 	
 	Hilaris hilaris;
-	hilaris.setConsoleLogLevel(DEBUG);
+	hilaris.setConsoleLogLevel(NONE);
 	
-	Camera* camera = hilaris.getCamera(new DebayerBGRStandard());
+	Camera* camera = hilaris.getCamera(new DebayerGreyscaleFast());
 	camera->setAutoExposure(true);	
 	
 	while(1)
 	{
-		BGRImage* img  = (BGRImage*)camera->captureImage();
+		GreyscaleImage* img  = (GreyscaleImage*)camera->captureImage();
 
 		img->save("/home/httpd/debayered.bmp");	
 		sleep(1);
