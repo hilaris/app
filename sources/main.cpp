@@ -3,41 +3,24 @@
 #include "Hilaris.h"
 #include "StreamServer.h"
 #include "Image.h"
+#include "BGRImageFactory.h"
+#include "DebayerBGRFast.h"
+
 #include "GreyscaleImageFactory.h"
 #include "DebayerGreyscaleFast.h"
 
 int main(){
 	
 	Hilaris hilaris;
-	hilaris.setConsoleLogLevel(NONE);
+	hilaris.setConsoleLogLevel(ALERT);
 	
 	Camera* camera = hilaris.getCamera(new DebayerGreyscaleFast());
 	camera->setAutoExposure(true);	
 	
-	while(1)
-	{
-		GreyscaleImage* img  = (GreyscaleImage*)camera->captureImage();
-
-		img->save("/home/httpd/debayered.bmp");	
-		sleep(1);
-	}
+	StreamServer s(camera);
+	s.start();
 	
-	//bin.save("meep_centroid.bmp");
-	
-	//Image* image = camera->captureImage();
-	
-	//image->toGreyscale();
-	
-	//image->save("foo.bmp");
-	
-	//StreamServer srv(camera);
-	
-	//srv.start();
-	
-	//while(1);
-
-	//GreyscaleImage GreyscaleImageFactory::getVectorDebayered(RawImage* raw)
-	//GreyscaleImage GreyscaleImageFactory::getHalfsizeDebayered(RawImage* raw)
+	while(1);
 	
 	return 0;
 }
