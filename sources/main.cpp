@@ -7,26 +7,21 @@
 #include "DebayerBGRFast.h"
 
 #include "GreyscaleImageFactory.h"
-#include "DebayerGreyscaleVector.h"
+#include "DebayerGreyscaleFast.h"
 #include "DebayerBGRBilinear.h"
+
+#include "processors/TestProcessor.h"
 
 int main(){
 	
 	Hilaris hilaris;
 	hilaris.setConsoleLogLevel(ALERT);
 	
-	Camera* camera = hilaris.getCamera(new DebayerBGRBilinear());
-	camera->setAutoExposure(true);	
+	Camera* camera = hilaris.getCamera(new DebayerBGRFast());
+	camera->setAutoExposure(true);
 	
-	Image* i = camera->captureImage();
-	#if defined(OSC_HOST)
-	i->save("testdebayered.bmp");
-	#endif
-
-	#if defined(OSC_TARGET)
-	i->save("/home/httpd/test.bmp");
-	#endif
-	
+	camera->addFrameProcessor(new TestProcessor());
+		
 	StreamServer s(camera);
 	s.start();
 	
