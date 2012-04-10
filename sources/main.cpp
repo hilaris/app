@@ -1,14 +1,4 @@
-
-#include "oscar.h"
 #include "Hilaris.h"
-#include "StreamServer.h"
-#include "Image.h"
-#include "BGRImageFactory.h"
-#include "DebayerBGRFast.h"
-
-#include "GreyscaleImageFactory.h"
-#include "DebayerGreyscaleFast.h"
-#include "DebayerBGRBilinear.h"
 
 int main(){
 	
@@ -16,10 +6,10 @@ int main(){
 	hilaris.setConsoleLogLevel(DEBUG);
 	
 	// create a red image
-	GreyscaleImage img = GreyscaleImageFactory::create(16, 16, 128);
+	BGRImage img = BGRImageFactory::create(16, 16, 150, 150, 255);
 	
 	// save
-	img.save("grey.bmp");
+	img.save("pink.bmp");
 	
 	return 0;
 }

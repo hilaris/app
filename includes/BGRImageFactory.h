@@ -1,6 +1,8 @@
 #ifndef _BGRIMAGEFACTORY_H_
 #define _BGRIMAGEFACTORY_H_
 
+class RGBImage;
+
 #include "oscar.h"
 #include "BGRImage.h"
 #include "RGBImage.h"
