@@ -5,11 +5,12 @@ int main(){
 	Hilaris hilaris;
 	hilaris.setConsoleLogLevel(DEBUG);
 	
-	// create a red image
-	RGBImage img = RGBImageFactory::create(16, 16, 150, 150, 255);
+	Camera* cam = hilaris.getCamera(0, 0, 100, 100, new DebayerBGRFast());
+	
+	BGRImage* bgr = (BGRImage*)cam->captureImage();
 	
 	// save
-	img.save("rgb.bmp");
+	bgr->save("aoi.bmp");
 	
 	return 0;
 }
