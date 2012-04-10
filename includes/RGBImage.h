@@ -6,9 +6,9 @@
 
 enum RGBPixel
 {
-	RED   = 0,
-	GREEN = 1,
-	BLUE  = 2
+	RGB_RED   = 0,
+	RGB_GREEN = 1,
+	RGB_BLUE  = 2
 };
 
 class RGBImage : public Image

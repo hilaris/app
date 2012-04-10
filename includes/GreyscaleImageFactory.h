@@ -12,6 +12,7 @@ class GreyscaleImageFactory
 		static GreyscaleImage getFastDebayered(RawImage* raw);
 		static GreyscaleImage getVectorDebayered(RawImage* raw);
 		static GreyscaleImage getHalfsizeDebayered(RawImage* raw);
+		
 		static GreyscaleImage getFromBinaryImage(BinaryImage& binary);
 		
 		static GreyscaleImage create(uint16 width, uint16 height, uint8 color);
