@@ -2,24 +2,23 @@
 #include "oscar.h"
 #include "Hilaris.h"
 #include "StreamServer.h"
-#include "Image.h"
-#include "BGRImageFactory.h"
-#include "DebayerBGRFast.h"
 
-#include "GreyscaleImageFactory.h"
-#include "DebayerGreyscaleFast.h"
 #include "DebayerBGRBilinear.h"
+
+#include "processors/BinaryProcessor.h"
 
 int main(){
 	
 	Hilaris hilaris;
 	hilaris.setConsoleLogLevel(DEBUG);
 	
-	// create a red image
-	GreyscaleImage img = GreyscaleImageFactory::create(16, 16, 128);
+	Camera* cam = hilaris.getCamera(new DebayerBGRFast());
 	
-	// save
-	img.save("grey.bmp");
+	//cam->addFrameProcessor(new BinaryProcessor());
+	
+	StreamServer s(cam);
+	
+	s.start();
 	
 	return 0;
 }
