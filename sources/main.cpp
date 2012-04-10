@@ -10,21 +10,16 @@
 #include "DebayerGreyscaleFast.h"
 #include "DebayerBGRBilinear.h"
 
-#include "processors/TestProcessor.h"
-
 int main(){
 	
 	Hilaris hilaris;
-	hilaris.setConsoleLogLevel(ALERT);
+	hilaris.setConsoleLogLevel(DEBUG);
 	
-	Camera* camera = hilaris.getCamera(new DebayerBGRFast());
-	camera->setAutoExposure(true);
+	// create a red image
+	GreyscaleImage img = GreyscaleImageFactory::create(16, 16, 128);
 	
-	camera->addFrameProcessor(new TestProcessor());
-		
-	StreamServer s(camera);
-	s.start();
-	
+	// save
+	img.save("grey.bmp");
 	
 	return 0;
 }

@@ -3,7 +3,7 @@ CC_HOST = g++
 CC_TARGET = bfin-uclinux-g++
 
 CCFLAG_T = -Wall -c -Iincludes/oscar -Iincludes/zbar -Iincludes -DOSC_TARGET
-CCFLAG_H = -Wall -c -m32 -Iincludes/oscar -Iincludes/zbar -Iincludes -DOSC_HOST
+CCFLAG_H = -Wall -c -m32 -Iincludes/oscar -Iincludes -DOSC_HOST
 
 LD_HOST := $(CC_HOST) -fPIC -m32
 LD_TARGET := $(CC_TARGET) -elf2flt="-s 3145728"
@@ -17,7 +17,7 @@ PROCESSORS := $(patsubst sources/processors/%.cpp,%,$(wildcard sources/processor
 all: host target
 
 host: $(addsuffix .o, $(addprefix build/host_, $(SOURCES))) $(addsuffix .o, $(addprefix build/processors/host_, $(PROCESSORS)))
-	$(LD_HOST) -o app_host $^ -Llibrary -lhilaris_host -losc_host -lpthread -lzbar
+	$(LD_HOST) -o app_host $^ -Llibrary -lhilaris_host -losc_host -lpthread 
 
 target: $(addsuffix .o, $(addprefix build/target_, $(SOURCES))) $(addsuffix .o, $(addprefix build/processors/target_, $(PROCESSORS)))
 	$(LD_TARGET) -o app_target  $^ -Llibrary -lhilaris_target -losc_target -lpthread
