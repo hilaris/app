@@ -5,7 +5,7 @@
 int main(){
 	
 	Hilaris hilaris;
-	hilaris.setConsoleLogLevel(DEBUG);
+	hilaris.setConsoleLogLevel(NONE);
 
 	Camera* cam = hilaris.getCamera(new DebayerGreyscaleFast());
 	
