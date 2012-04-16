@@ -6,6 +6,7 @@
 #include "FrameProcessor.h"
 #include "BinaryImage.h"
 #include "BinaryImageFactory.h"
+#include "Debug.h"
 
 class RegionProcessors : public FrameProcessor
 {

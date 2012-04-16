@@ -6,9 +6,8 @@ Image* RegionProcessors::process(Image* image)
 	
 	BinaryImage binary = BinaryImageFactory::getFromGreyscaleImage(*tmp, 127, false);
 
-	binary.label();
-	binary.drawBoundingBox();
-	
+	Debug::log("%d\n", Debug::fps());
+
 	for(int i = 0; i < binary.getHeight(); i++)
 	{
 		for(int j = 0; j < binary.getWidth(); j++)
