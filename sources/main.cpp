@@ -1,15 +1,15 @@
 #include "Hilaris.h"
 
-#include "processors/TestProcessor.h"
+#include "processors/RegionProcessors.h"
 
 int main(){
 	
 	Hilaris hilaris;
-	hilaris.setConsoleLogLevel(NONE);
+	hilaris.setConsoleLogLevel(DEBUG);
 
-	Camera* cam = hilaris.getCamera(new DebayerBGRFast());
+	Camera* cam = hilaris.getCamera(new DebayerGreyscaleFast());
 	
-	cam->addFrameProcessor(new TestProcessor());
+	cam->addFrameProcessor(new RegionProcessors());
 
 	StreamServer s(cam);
 	s.start();
