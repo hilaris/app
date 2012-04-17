@@ -6,7 +6,7 @@ Image* RegionProcessors::process(Image* image)
 	
 	BinaryImage binary = BinaryImageFactory::getFromGreyscaleImage(*tmp, 127, false);
 
-	Debug::log("%d\n", Debug::fps());
+	//Debug::log("%d\n", Debug::fps());
 
 	for(int i = 0; i < binary.getHeight(); i++)
 	{
