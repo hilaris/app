@@ -7,7 +7,7 @@ int main(){
 	Hilaris hilaris;
 	hilaris.setConsoleLogLevel(DEBUG);
 
-	Camera* cam = hilaris.getCamera(new DebayerBGRStandard());
+	Camera* cam = hilaris.getCamera(new DebayerGreyscaleFast());
 	
 	//cam->addFrameProcessor(new RegionProcessors());
 
