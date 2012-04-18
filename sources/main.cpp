@@ -1,6 +1,6 @@
 #include "Hilaris.h"
 
-#include "processors/BinaryProcessor.h"
+#include "processors/RegionProcessors.h"
 
 int main(){
 	
@@ -11,6 +11,7 @@ int main(){
 	
 	cam->setAutoExposure(true);
 	//cam->addFrameProcessor(new BinaryProcessor());
+	cam->addFrameProcessor(new BinaryProcessor());
 
 	StreamServer s(cam);
 	s.start();
