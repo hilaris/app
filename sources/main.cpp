@@ -1,6 +1,6 @@
 #include "Hilaris.h"
 
-#include "processors/BinaryProcessor.h"
+#include "processors/RegionProcessors.h"
 
 int main(){
 	
@@ -9,7 +9,7 @@ int main(){
 
 	Camera* cam = hilaris.getCamera(new DebayerGreyscaleFast());
 	
-	cam->addFrameProcessor(new BinaryProcessor());
+	cam->addFrameProcessor(new RegionProcessors());
 
 	StreamServer s(cam);
 	s.start();
