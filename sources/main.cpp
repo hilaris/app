@@ -5,11 +5,13 @@
 int main(){
 	
 	Hilaris hilaris;
-	hilaris.setConsoleLogLevel(DEBUG);
+	hilaris.setConsoleLogLevel(NONE);
 
 	Camera* cam = hilaris.getCamera(new DebayerGreyscaleFast());
 	
-	cam->addFrameProcessor(new RegionProcessors());
+	cam->setAutoExposure(true);
+	//cam->addFrameProcessor(new BinaryProcessor());
+	cam->addFrameProcessor(new BinaryProcessor());
 
 	StreamServer s(cam);
 	s.start();
