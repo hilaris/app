@@ -212,6 +212,8 @@ class Hilaris {
 		 */
 		void setRemoveOnCleanup(bool remove);
 		
+		char** getOscarVersion();
+		
 		IO* io();
 		
 	private:
