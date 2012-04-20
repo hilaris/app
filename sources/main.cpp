@@ -6,16 +6,13 @@ int main(){
 	
 	Hilaris hilaris;
 	hilaris.setConsoleLogLevel(NONE);
-
-	Camera* cam = hilaris.getCamera(new DebayerGreyscaleFast());
 	
-	cam->setAutoExposure(true);
-	//cam->addFrameProcessor(new BinaryProcessor());
-	cam->addFrameProcessor(new BinaryProcessor());
+	hilaris.io()->led()->on();
+	
+	sleep(2);
 
-	StreamServer s(cam);
-	s.start();
-
+	hilaris.io()->led()->on();
+	
 	
 	return 0;
 }
