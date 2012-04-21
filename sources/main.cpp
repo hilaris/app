@@ -1,13 +1,14 @@
 #include "Hilaris.h"
 
-#include "processors/RegionProcessors.h"
-
 int main(){
 	
 	Hilaris hilaris;
+	Camera* camera = hilaris.getCamera(new DebayerBinaryDirect());
 	
-	printf("version: %s\n", hilaris.getOscarVersion());
+	BinaryImage* image = (BinaryImage*) camera->captureImage();
 	
+	image->sobel(2);
+	image->save("sobel.bmp");
 
 	
 	return 0;
