@@ -5,14 +5,10 @@
 int main(){
 	
 	Hilaris hilaris;
-	hilaris.setConsoleLogLevel(NONE);
 	
-	hilaris.io()->led()->on();
+	printf("version: %s\n", hilaris.getOscarVersion());
 	
-	sleep(2);
 
-	hilaris.io()->led()->on();
-	
 	
 	return 0;
 }
