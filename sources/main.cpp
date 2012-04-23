@@ -11,9 +11,10 @@ int main(){
 	
 	Camera* cam = hilaris.getCamera(new DebayerGreyscaleFast());
 	cam->setAutoExposure(true);	
+	
 	cam->addFrameProcessor(new EdgeProcessor());
 	
-	StreamServerNoThread s(cam);
+	StreamServer s(cam);
 	
 	s.start();
 	
