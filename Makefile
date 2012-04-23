@@ -17,10 +17,10 @@ PROCESSORS := $(patsubst sources/processors/%.cpp,%,$(wildcard sources/processor
 all: host target
 
 host: $(addsuffix .o, $(addprefix build/host_, $(SOURCES))) $(addsuffix .o, $(addprefix build/processors/host_, $(PROCESSORS)))
-	$(LD_HOST) -o app_host $^ -Llibrary -lhilaris_host -losc_host -lpthread 
+	$(LD_HOST) -o app_host $^ -Llibrary -lhilaris_host -losc_host -losc_overlay_host -lpthread 
 
 target: $(addsuffix .o, $(addprefix build/target_, $(SOURCES))) $(addsuffix .o, $(addprefix build/processors/target_, $(PROCESSORS)))
-	$(LD_TARGET) -o app_target  $^ -Llibrary -lhilaris_target -losc_target -lpthread
+	$(LD_TARGET) -o app_target  $^ -Llibrary -lhilaris_target -losc_target -losc_overlay_target -lpthread
 	
 build/target_%.o: sources/%.cpp
 	$(CC_TARGET) $(CCFLAG_T) $? -o $@
