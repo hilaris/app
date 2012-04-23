@@ -2,6 +2,8 @@
 
 #include "processors/EdgeProcessor.h"
 
+
+
 int main(){
 	
 	Hilaris hilaris;
@@ -11,7 +13,8 @@ int main(){
 	cam->setAutoExposure(true);	
 	cam->addFrameProcessor(new EdgeProcessor());
 	
-	StreamServer s(cam);
+	StreamServerNoThread s(cam);
+	
 	s.start();
 	
 	return 0;

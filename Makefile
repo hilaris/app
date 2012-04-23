@@ -6,7 +6,7 @@ CCFLAG_T = -Wall -c -Iincludes/oscar -Iincludes -DOSC_TARGET
 CCFLAG_H = -Wall -c -m32 -Iincludes/oscar -Iincludes -DOSC_HOST
 
 LD_HOST := $(CC_HOST) -fPIC -m32
-LD_TARGET := $(CC_TARGET) -elf2flt="-s 3145728"
+LD_TARGET := $(CC_TARGET) -elf2flt="-s 2145728"
 
 BUILD = build
 
