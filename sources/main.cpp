@@ -1,23 +1,20 @@
 #include "Hilaris.h"
-
+#include "processors/RandomBoxes.h"
 
 int main(){
 	
 	Hilaris hilaris;
-	hilaris.setConsoleLogLevel(DEBUG);
-	
+	hilaris.setConsoleLogLevel(DEBUG);	
 
-	Camera* cam = hilaris.getCamera(new DebayerGreyscaleFast());
+	ov_init();
+
+	Camera* cam = hilaris.getCamera(new DebayerBGRFast());
 	cam->setAutoExposure(true);	
-	cam->addFrameProcessor(new EdgeProcessor());
+	cam->addFrameProcessor(new RandomBoxes());
+
+	StreamServer s(cam);
 	
-	Image* img = cam->captureImage();
-	
-	Text* t = new Text(10,10,1,"blupp", 0x0000FF, 0x000000);
-	
-	t.draw(img);
-	
-	img->save("text.bmp");
+	s.start();
 	
 	return 0;
 }
