@@ -3,16 +3,13 @@
 int main(){
 	
 	Hilaris hilaris;
-	hilaris.setConsoleLogLevel(DEBUG);
+	hilaris.setConsoleLogLevel(NONE);
 	
-	Camera* cam = hilaris.getCamera(new DebayerGreyscaleFast());
-	GreyscaleImage* grey = (GreyscaleImage*)cam->captureImage();
+	Camera* camera = hilaris.getCamera();
 	
-	grey->save("not-equalized.bmp");
+	StreamServer srv(camera);
+	srv.start();
 	
-	grey->histogram()->equalize();
-	
-	grey->save("equalized.bmp");
-	
+		
 	return 0;
 }
