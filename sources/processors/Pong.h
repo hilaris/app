@@ -1,6 +1,8 @@
 #ifndef _PONG_H_
 #define _PONG_H_
 
+#include <unistd.h>
+
 #include "oscar.h"
 #include "FrameProcessor.h"
 #include "BinaryImage.h"
@@ -21,19 +23,23 @@ class Pong: public FrameProcessor
 		enum State
 		{
 			STARTUP,
-			STARTUP_ALT
+			STARTUP_ALT,
+			MENU
 		};
 		
 		enum State current;
 		enum State next;
 		
 		int doSwitch;
+		int introSwitch;
 		
 		BinaryImage* screenStart;
 		BinaryImage* screenStartAlt;
+		BinaryImage* screenMenu;
 		
 		Overlay* overlayStart;
 		Overlay* overlayStartAlt;
+		Overlay* overlayMenu;
 };
 
 #endif

@@ -11,7 +11,6 @@
 class Text : public DrawableObject
 {
 	public:
-		Text() {}
 		Text(uint16 x, uint16 y, uint8 size, const char* text, uint32 fgColor, uint32 bgColor);
 		~Text() {}
 		
