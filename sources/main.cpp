@@ -1,16 +1,14 @@
 #include "Hilaris.h"
-#include "processors/EdgeProcessor.h"
+#include "processors/RandomBoxes.h"
 
 int main(){
 	
 	Hilaris hilaris;
 	hilaris.setConsoleLogLevel(DEBUG);	
-
-	ov_init();
-
-	Camera* cam = hilaris.getCamera(new DebayerBinaryDirect(80));
-	cam->setAutoExposure(false);	
-	cam->addFrameProcessor(new EdgeProcessor());
+	
+	Camera* cam = hilaris.getCamera(new DebayerGreyscaleFast());
+	cam->setAutoExposure(true);	
+	cam->addFrameProcessor(new RandomBoxes());
 
 	StreamServer s(cam);
 	
