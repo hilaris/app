@@ -4,16 +4,10 @@
 int main(){
 	
 	Hilaris hilaris;
-	hilaris.setConsoleLogLevel(DEBUG);	
+	hilaris.setConsoleLogLevel(INFO);	
 
-	ov_init();
-
-	Camera* cam = hilaris.getCamera(new DebayerGreyscaleFast());
-	cam->setAutoExposure(false);	
-	
-	GreyscaleImage* grey = (GreyscaleImage*) cam->captureImage();
-	
-	grey->save("warning.bmp");
+	Debug::log("foobar %d\n", 10);
+	Debug::log(Debug::DEBUG, "meep - %s\n", "foo");
 	
 	return 0;
 }
