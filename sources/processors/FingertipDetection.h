@@ -10,7 +10,7 @@
 class FingertipDetection: public FrameProcessor
 {
 	public:
-		BGRImage* background;
+		GreyscaleImage* background;
 		Overlay ov;
 		FingertipDetection();
 		Image* process(Image* image);

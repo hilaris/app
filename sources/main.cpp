@@ -6,10 +6,9 @@ int main(){
 	Hilaris hilaris;
 	hilaris.setConsoleLogLevel(INFO);	
 	
-	Camera* cam = hilaris.getCamera(new DebayerBGRFast());
+	Camera* cam = hilaris.getCamera(new DebayerGreyscaleFast());
 	
-	cam->setAutoExposure(false);
-	cam->setShutterWidth(10000);
+	cam->setAutoExposure(true);
 	cam->addFrameProcessor(new FingertipDetection());
 	
 	StreamServer s(cam);

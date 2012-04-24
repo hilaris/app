@@ -8,15 +8,25 @@ FingertipDetection::FingertipDetection()
 
 Image* FingertipDetection::process(Image* image)
 {
+	((GreyscaleImage*)image)->sobel(8);
+	
 	if(this->background == NULL)
 	{
-		this->background = new BGRImage(image->getWidth(), image->getHeight());
+		this->background = new GreyscaleImage(image->getWidth(), image->getHeight());
 		memcpy(this->background->getDataPtr(), image->getDataPtr(), image->getWidth() * image->getHeight());
 	}
 	
-	//((BGRImage*)image)->subtract(this->background);
+	for(int i = 0; i < image->getHeight(); i ++)
+	{
+		for(int j = 0; j < image->getWidth(); j ++)
+		{
+
+			((GreyscaleImage*)image)->pixel(i,j) = ((GreyscaleImage*)image)->pixel(i,j) < ((GreyscaleImage*)this->background)->pixel(i,j)?0:((GreyscaleImage*)image)->pixel(i,j)-((GreyscaleImage*)this->background)->pixel(i,j);
+
+		}
+	}
 	
-	//((GreyscaleImage*)image)->sobel(10);
+	
 	
 	image->drawOverlay(&ov);
 	
