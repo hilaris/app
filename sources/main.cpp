@@ -10,11 +10,10 @@ int main(){
 
 	Camera* cam = hilaris.getCamera(new DebayerGreyscaleFast());
 	cam->setAutoExposure(false);	
-	//cam->addFrameProcessor(new EdgeProcessor());
-
-	StreamServer s(cam);
 	
-	s.start();
+	GreyscaleImage* grey = (GreyscaleImage*) cam->captureImage();
+	
+	grey->save("warning.bmp");
 	
 	return 0;
 }
