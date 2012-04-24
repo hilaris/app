@@ -1,5 +1,5 @@
 #include "Hilaris.h"
-//#include "processors/EdgeProcessor.h"
+#include "processors/EdgeProcessor.h"
 
 int main(){
 	
@@ -8,9 +8,9 @@ int main(){
 
 	ov_init();
 
-	Camera* cam = hilaris.getCamera(new DebayerGreyscaleFast());
+	Camera* cam = hilaris.getCamera(new DebayerBinaryDirect(80));
 	cam->setAutoExposure(false);	
-	//cam->addFrameProcessor(new EdgeProcessor());
+	cam->addFrameProcessor(new EdgeProcessor());
 
 	StreamServer s(cam);
 	
