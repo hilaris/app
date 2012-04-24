@@ -8,9 +8,9 @@ int main(){
 
 	ov_init();
 
-	Camera* cam = hilaris.getCamera(new DebayerBinaryDirect());
+	Camera* cam = hilaris.getCamera(new DebayerGreyscaleFast());
 	cam->setAutoExposure(false);	
-	cam->addFrameProcessor(new EdgeProcessor());
+	//cam->addFrameProcessor(new EdgeProcessor());
 
 	StreamServer s(cam);
 	
