@@ -5,14 +5,35 @@
 #include "FrameProcessor.h"
 #include "BinaryImage.h"
 #include "Overlay.h"
+#include "DrawableObject.h"
 #include "Text.h"
+#include "Debug.h"
 
 class Pong: public FrameProcessor
 {
 	public:
-		BinaryImage* background;
+	
 		Pong();
 		Image* process(Image* image);
+	
+	private:
+	
+		enum State
+		{
+			STARTUP,
+			STARTUP_ALT
+		};
+		
+		enum State current;
+		enum State next;
+		
+		int doSwitch;
+		
+		BinaryImage* screenStart;
+		BinaryImage* screenStartAlt;
+		
+		Overlay* overlayStart;
+		Overlay* overlayStartAlt;
 };
 
 #endif
