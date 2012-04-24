@@ -1,10 +1,15 @@
 #ifndef _RGBIMAGE_H_
 #define _RGBIMAGE_H_
 
+class BinaryImage;
+class GreyscaleImage;
+class BGRImage;
+
 #include "oscar.h"
 #include "Image.h"
+#include "GreyscaleImage.h"
+#include "BinaryImage.h"
 #include "BGRImage.h"
-#include "BGRImageFactory.h"
 
 /**
  *  @brief A RGB-encoded colored Image.
@@ -69,6 +74,10 @@ class RGBImage : public Image
 		 *  @see RGBImage::pixel
 		 */
 		uint8& operator()(const uint16 x, const uint16, enum RGBImage::Pixel component);
+		
+		BinaryImage* convert(BinaryImage* binary, uint8 threshold = 127, bool darkIsForeground = true);
+		GreyscaleImage* convert(GreyscaleImage* grey);
+		BGRImage* convert(BGRImage* bgr);
 	
 	private:
 		uint8 data[Image::MAX_WIDTH * Image::MAX_HEIGHT * 3];
