@@ -1,5 +1,6 @@
 #include "Hilaris.h"
 #include "processors/RandomBoxes.h"
+#include "processors/EdgeProcessor.h"
 
 int main(){
 	
@@ -9,6 +10,7 @@ int main(){
 	Camera* cam = hilaris.getCamera(new DebayerGreyscaleFast());
 	cam->setAutoExposure(true);	
 	cam->addFrameProcessor(new RandomBoxes());
+	cam->addFrameProcessor(new EdgeProcessor());
 
 	StreamServer s(cam);
 	
