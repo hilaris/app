@@ -52,9 +52,6 @@ Image* BallProcessor::process(Image* img)
 	}
 	else
 		this->ball->y1 += this->mvY;
-		
-	//this->ball->x1 += this->mvX;
-	//this->ball->y1 += this->mvY;
 	
 	
 	this->ball->x2 = this->ball->x1 + BALLSIZE;

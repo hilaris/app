@@ -10,10 +10,9 @@ Image* FingertipDetection::process(Image* image)
 {
 	//((GreyscaleImage*)image)->sobel(8);
 	
-	if(this->background == NULL)
+	if(this->background.size() < 5)
 	{
-		this->background = new GreyscaleImage(image->getWidth(), image->getHeight());
-		this->backgroundold = new GreyscaleImage(image->getWidth(), image->getHeight());
+		this->background.push_back = new GreyscaleImage(image->getWidth(), image->getHeight());
 		memcpy(this->background->getDataPtr(), image->getDataPtr(), image->getWidth() * image->getHeight());
 		memcpy(this->backgroundold->getDataPtr(), image->getDataPtr(), image->getWidth() * image->getHeight());
 	}

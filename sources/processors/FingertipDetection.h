@@ -1,6 +1,8 @@
 #ifndef _FINGERTIP_PROCESSOR_
 #define _FINGERTIP_PROCESSOR_
 
+#include <vector>
+
 #include "oscar.h"
 #include "FrameProcessor.h"
 #include "BinaryImage.h"
@@ -10,8 +12,7 @@
 class FingertipDetection: public FrameProcessor
 {
 	public:
-		GreyscaleImage* background;
-		GreyscaleImage* backgroundold;
+		std::vector<GreyscaleImage*> background;
 		Overlay ov;
 		FingertipDetection();
 		Image* process(Image* image);
