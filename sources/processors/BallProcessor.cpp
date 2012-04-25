@@ -10,6 +10,7 @@
 BallProcessor::BallProcessor()
 {
 	srand ( time(NULL) );
+	this->bounding = new Box(0,0,375,239, 0xFFFFFF, false);
 	this->ball = new Ellipse(50,115,50+BALLSIZE,115+BALLSIZE,0xFFFFFF, true);
 	this->mvX = rand() % MAXSPEED;
 	this->mvY = rand() % MAXSPEED;
@@ -17,7 +18,10 @@ BallProcessor::BallProcessor()
 
 Image* BallProcessor::process(Image* img)
 {
+	this->ball->color = rand() % 16777216;
 	this->ball->draw(img);
+	this->bounding->draw(img);
+	
 	
 	if((this->ball->x1 + BALLSIZE + this->mvX) == img->getWidth())
 		this->ball->x1 = img->getWidth()-BALLSIZE;
