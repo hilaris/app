@@ -7,15 +7,14 @@ int main(){
 	Hilaris hilaris;
 	hilaris.setConsoleLogLevel(INFO);	
 
-	
 	Camera* cam = hilaris.getCamera(new DebayerGreyscaleFast());
 	cam->setAutoExposure(true);
 
-	cam->addFrameProcessor("Finger", new FingertipDetection());
-	cam->addFrameProcessor("Ball", new BallProcessor());
+	cam->addFrameProcessor(new FingertipDetection());
+	cam->addFrameProcessor(new BallProcessor());
 	
 	StreamServer s(cam);
 	s.start();
-
+	
 	return 0;
 }
