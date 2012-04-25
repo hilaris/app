@@ -10,8 +10,8 @@ int main(){
 	Camera* cam = hilaris.getCamera(new DebayerGreyscaleFast());
 	cam->setAutoExposure(true);
 
-	cam->addFrameProcessor(new FingertipDetection());
-	cam->addFrameProcessor(new BallProcessor());
+	//cam->addFrameProcessor(new FingertipDetection());
+	//cam->addFrameProcessor(new BallProcessor());
 	
 	StreamServer s(cam);
 	s.start();
