@@ -1,20 +1,14 @@
 #include "Hilaris.h"
-#include "processors/FingertipDetection.h"
-#include "processors/BallProcessor.h"
 
 int main(){
 
 	Hilaris hilaris;
-	hilaris.setConsoleLogLevel(INFO);	
+	hilaris.setConsoleLogLevel(DEBUG);	
 
-	Camera* cam = hilaris.getCamera(new DebayerGreyscaleFast());
-	cam->setAutoExposure(true);
-
-	cam->addFrameProcessor(new FingertipDetection());
-	cam->addFrameProcessor(new BallProcessor());
+	Camera* cam = hilaris.getCamera(new DebayerBinaryDirect());
+	RawImage* raw = (RawImage* )cam->captureImage();
 	
-	StreamServer s(cam);
-	s.start();
+	raw->save("../hilaris/examples/images/binary.bmp");
 	
 	return 0;
 }
