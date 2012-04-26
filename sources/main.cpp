@@ -3,10 +3,10 @@
 int main(){
 
 	Hilaris hilaris;
-	hilaris.setConsoleLogLevel(DEBUG);	
-
+	hilaris.setConsoleLogLevel(DEBUG);
+	
 	Camera* cam = hilaris.getCamera(new DebayerBinaryDirect());
-	RawImage* raw = (RawImage* )cam->captureImage();
+	BinaryImage* raw = (BinaryImage* )cam->captureImage();
 	
 	raw->save("../hilaris/examples/images/binary.bmp");
 	
