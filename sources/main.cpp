@@ -4,11 +4,11 @@ int main(){
 
 	Hilaris hilaris;
 	hilaris.setConsoleLogLevel(DEBUG);
+		
+	Camera* cam = hilaris.getCamera(new DebayerGreyscaleFast());
+	BGRImage* raw = (BGRImage* )cam->captureImage();
 	
-	Camera* cam = hilaris.getCamera(new DebayerBinaryDirect());
-	BinaryImage* raw = (BinaryImage* )cam->captureImage();
-	
-	raw->save("../hilaris/examples/images/binary.bmp");
+	raw->save("../hilaris/examples/images/greyscale.bmp");
 	
 	return 0;
 }
