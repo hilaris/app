@@ -5,15 +5,11 @@ int main(){
 	Hilaris hilaris;
 	hilaris.setConsoleLogLevel(DEBUG);
 	
-	DebayerBinaryDirect* db = new DebayerBinaryDirect();
+	Camera* cam = hilaris.getCamera(new DebayerGreyscaleFast());
+	GreyscaleImage* raw = (GreyscaleImage* )cam->captureImage();
 	
-	db->setThreshold(150);
-	
-	Camera* cam = hilaris.getCamera(db);
-	BinaryImage* raw = (BinaryImage* )cam->captureImage();
-	
-	raw->sobel();
-	raw->save("../hilaris/examples/images/sobel.bmp");
+	raw->histogram()->equalize();
+	raw->save("../hilaris/examples/images/histogram.bmp");
 	
 	return 0;
 }
