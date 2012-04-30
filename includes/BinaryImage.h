@@ -91,6 +91,9 @@ class BinaryImage : public Image
 		 *
 		 *  @param strel The structuring element.
 		 *  @param repetitions How many times it should be eroded.
+		 *
+		 *  @image html binary.bmp Before.
+		 *  @image html erode.bmp After. Called with DISK2 as structuring element.
 		 */
 		bool erode(struct OSC_VIS_STREL *strel, uint8 repetitions = 1);
 		
@@ -99,6 +102,9 @@ class BinaryImage : public Image
 		 *
 		 *  @param strel The structuring element.
 		 *  @param repetitions How many times it should be dilated.
+		 *
+		 *  @image html binary.bmp Before.
+		 *  @image html dilate.bmp After. Called with DISK2 as structuring element.
 		 */
 		bool dilate(struct OSC_VIS_STREL *strel, uint8 repetitions = 1);
 		
@@ -157,6 +163,9 @@ class BinaryImage : public Image
 		
 		/**
 		 *  @brief Invert this image. Black will become white and vice versa.
+		 *
+		 *  @image html binary.bmp Before.
+		 *  @image html inverted.bmp After.
 		 */
 		void invert();
 		
@@ -179,6 +188,9 @@ class BinaryImage : public Image
 		 *
 		 *  @note This function leaves a one pixel wide border of the output image untouched.
 		 *   Unless these pixels are treated outside this function, they might be in an undefined state.
+		 *
+		 *  @image html binary.bmp Before.
+		 *  @image html sobel.bmp After.
 		 */
 		bool sobel(uint8 exp = 10);
 		

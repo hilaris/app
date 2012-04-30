@@ -1,19 +1,16 @@
 #include "Hilaris.h"
+#include "processors/LEDFrameProcessor.h"
 
 int main(){
 
 	Hilaris hilaris;
-	hilaris.setConsoleLogLevel(DEBUG);
+	hilaris.setConsoleLogLevel(NONE);
 	
-	DebayerBinaryDirect* db = new DebayerBinaryDirect();
+	Camera* camera = hilaris.getCamera();
+	camera->addFrameProcessor(new LEDFrameProcessor(&hilaris));
 	
-	db->setThreshold(150);
-	
-	Camera* cam = hilaris.getCamera(db);
-	BinaryImage* raw = (BinaryImage* )cam->captureImage();
-	
-	raw->invert();
-	raw->save("../hilaris/examples/images/inverted.bmp");
+	StreamServer srv(camera);
+	srv.start();
 	
 	return 0;
 }
