@@ -1,13 +1,15 @@
 #include "Hilaris.h"
-#include "processors/LEDFrameProcessor.h"
+#include "processors/FigureDetector.h"
 
 int main(){
 
 	Hilaris hilaris;
 	hilaris.setConsoleLogLevel(NONE);
+		
+	Camera* camera = hilaris.getCamera();//new DebayerGreyscaleFast()); //new DebayerBinaryDirect(120));
 	
-	Camera* camera = hilaris.getCamera();
-	camera->addFrameProcessor(new LEDFrameProcessor(&hilaris));
+	camera->addFrameProcessor(new FigureDetector(&hilaris));
+	camera->setAutoExposure(false);
 	
 	StreamServer srv(camera);
 	srv.start();
