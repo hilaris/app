@@ -14,6 +14,9 @@ BUILD = build
 SOURCES := $(patsubst sources/%.cpp,%,$(wildcard sources/*.cpp))
 PROCESSORS := $(patsubst sources/processors/%.cpp,%,$(wildcard sources/processors/*.cpp))
 
+IP=192.168.1.10
+NAME=hilaris
+
 all: host target
 
 host: $(addsuffix .o, $(addprefix build/host_, $(SOURCES))) $(addsuffix .o, $(addprefix build/processors/host_, $(PROCESSORS)))
@@ -37,5 +40,12 @@ build/processors/host_%.o: sources/processors/%.cpp
 clean:
 	rm -f $(BUILD)/*.o $(BUILD)/processors/*.o
 	rm -f app_*
+	
+deploy: target
+	@ mkdir -p deploy/$(NAME)
+	@ cp app_target deploy/$(NAME)/app
+	@ cp Font_System.bmp deploy/$(NAME)/
+	@ cp deploy/run.sh deploy/$(NAME)/
+	scp -r deploy/$(NAME) root@$(IP):/mnt/app/
 
 
