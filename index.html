@@ -1,0 +1,429 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+    <meta charset='utf-8' />
+    <meta http-equiv="X-UA-Compatible" content="chrome=1" />
+    <meta name="description" content="Hilaris Application : sources which are used to develop applications for the leanXcam with the Hilaris framework" />
+
+    <link rel="stylesheet" type="text/css" media="screen" href="stylesheets/stylesheet.css">
+
+    <title>Hilaris Application</title>
+  </head>
+
+  <body>
+
+    <!-- HEADER -->
+    <div id="header_wrap" class="outer">
+        <header class="inner">
+          <a id="forkme_banner" href="https://github.com/hilaris/app">View on GitHub</a>
+
+          <h1 id="project_title">Hilaris Application</h1>
+          <h2 id="project_tagline">sources which are used to develop applications for the leanXcam with the Hilaris framework</h2>
+
+            <section id="downloads">
+              <a class="zip_download_link" href="https://github.com/hilaris/app/zipball/master">Download this project as a .zip file</a>
+              <a class="tar_download_link" href="https://github.com/hilaris/app/tarball/master">Download this project as a tar.gz file</a>
+            </section>
+        </header>
+    </div>
+
+    <!-- MAIN CONTENT -->
+    <div id="main_content_wrap" class="outer">
+      <section id="main_content" class="inner">
+        <h3>Einleitung</h3>
+
+<p>Die nachfolgende Beschreibung zur Installation wurde auf einem 64 &amp; 32bit Ubuntu 12.04 LTS getestet.</p>
+
+<h4>Konfiguration der Kamera</h4>
+
+<p>Um die Kamera zu konfigurieren, beziehungsweise Anwendungen zu starten, bietet die leanXcam eine Ethernet-Schnittstelle über welche kommuniziert werden kann. Die IP-Adresse der Kamera ist standardmässig    auf 192.168.1.10 eingestellt. Per SSH kann mit dem Befehl <code>ssh root@192.168.1.10</code> und dem Passwort "oscar" eine  Verbindung hergestellt werden.  Sollte dies nicht der Fall sein und die IP-Adresse muss zurück gesetzt werden, kann die Kamera ohne Netzwerkkabel an den Strom angeschlossen werden, womit die Adresse temporär zurückgesetzt wird.  Nun kann die Kamera an das Netzwerk angeschlossen um die IP-Adresse neu zu setzen. Dies geschieht wiederum über eine SSH Verbindung und dem Befehl  <code>fw_setenv ipaddr &lt;IP Adresse&gt;</code>. Die IP Adresse muss auch gesetzt werden, wenn sie gleich wie die temporäre Adresse ist. Alternativ zu einer IP Adresse kann auch "dhcp" angegeben  werden, damit die Kamera eine dynamische Adresse bezieht. 
+Weitere Informationen zur Benutzung und Konfiguration der Kamera können unter dem Link <a href="http://leanxcam.origo.ethz.ch/wiki/users_guideusing_uclinux">http://leanxcam.origo.ethz.ch/wiki/users_guideusing_uclinux</a> gefunden werden.</p>
+
+<h4>Entwicklungsumgebung</h4>
+
+<p>Um Anwendungen für die Kamera kompilieren zu können, wird die <em>bfin-uclinux</em>-Toolchain benötigt.
+Diese steht in einer virtuellen Maschine zur Verfügung, welche von der Firma SCS AG als Torrent-Download (<a href="http://download.origo.ethz.ch/leanxcam/2089/leanXcam_SDK_v3.0.torrent">http://download.origo.ethz.ch/leanxcam/2089/leanXcam_SDK_v3.0.torrent</a>) bereitgestellt    wird.
+Möchte man nicht in einer virtuellen Umgebung arbeiten, muss diese Toolchain zuerst installiert werden.    Dazu müssen folgende Befehle der Reihe nach im Terminal ausgeführt werden.</p>
+
+<pre><code>$&gt; sudo apt-get install g++-multilib
+
+$&gt; wget http://download.analog.com/27516/distros/debian/apt.key
+$&gt; sudo apt-key add apt.key
+
+$&gt; sudo su -
+#&gt; mkdir -p /etc/apt/sources.list.d
+#&gt; cd /etc/apt/sources.list.d
+#&gt; echo deb http://download.analog.com/27516/distros/debian stable main &gt; blackfin.sources.list
+
+#&gt; apt-get update
+#&gt; apt-get install blackfin-toolchain-uclinux blackfin-toolchain-linux-uclibc
+
+#&gt; exit
+
+$&gt; echo export PATH=$PATH:/opt/uClinux/bfin-uclinux/bin:/opt/uClinux/bfin-linux-uclibc/bin &gt;&gt; ~/.bashrc
+
+$&gt; bash
+</code></pre>
+
+<p>Nun werden noch die Hilaris-Bibliotheken und eine Vorlage benötigt, welche unter <a href="http://hilaris.github.com/app">http://hilaris.github.com/app</a> gefunden werden können. Nach dem Entpacken des Archivs, welche  als Vorlage für eine Anwendung dient, kann mit Entwickeln der ersten Anwendung begonnen werden.  Das Hauptprogramm wie auch allfälliger weiterer Code befindet sich im Unterordner <em>sources</em>  wobei das Hauptprogramm mit <em>main.cpp</em> benannt ist. Diese Datei soll später in den Beispielen  bearbeitet werden.</p>
+
+<h4>Kompilieren &amp; Ausführen</h4>
+
+<p>Zum Schluss muss die Anwendung noch kompiliert. Es gibt die Möglichkeit die Anwendung auf dem System zu testen, auf welchem sie entwickelt wurde (Host). Oder man führt sie direkt auf der Kamera (Target) aus. Mit dem Befehl <em>make</em> werden die Quelldateien zu  einer Host- und einer Target-Anwendung kompiliert. Möchte man nur die Host- oder nur die Target-Anwendung erzeugen, kann dies mit <em>make host</em> beziehungsweise <em>make target</em> erreicht werden. </p>
+
+<ul>
+<li>
+<strong>Host - app_host</strong> Die für den Host kompilierte Anwendung wird <em>app_host</em> benannt und  befindet sich direkt im <em>app</em> Verzeichnis. Ebenfalls darin liegt ein Testbild       namens <em>test.bmp</em> welches als statisches Kamerabild verwendet wird, wenn die Anwendung auf dem  Host ausgeführt wird. Dieses Testbild muss zwingend im selben Verzeichnis wie die Anwendung sein und der Name darf nicht geändert werden.</li>
+<li>
+<strong>Target - app_target</strong> Die Target-Applikation muss nach dem kompilieren noch auf die Kamera geladen werden, was mithilfe des Befehls <code>make deploy NAME=&lt;App Name&gt; IP=&lt;IP Kamera&gt;</code> erreicht wird. Wenn kein Name oder keine IP-Adresse angegeben wird, wird <em>hilaris</em> als Standardname sowie die Standard-IP-Adresse 192.168.1.10 verwendet. Danach muss mittels SSH auf die Kamera verbunden und die Applikation gestartet werden. Dazu befindet sich im Ordner <em>/mnt/app/</em> ein Skript <em>run.sh</em> welches bereits gestartete Instanzen der Anwendung beendet und die neue startet. Soll eine Anwendung automatisch beim Start der Kamera ausgeführt werden, kann dies in der <em>runscript</em> Umgebungsvariabel hinterlegt werden. Dafür muss wieder per SSH eine   Verbindung mit der Kamera hergestellt und danach der Befehl <code>fw_setenv runscript &lt;Pfad zu run.sh&gt;</code> ausgeführt werden.</li>
+</ul><h5>Eclipse</h5>
+
+<p>Falls Eclipse als Entwicklungsumgebung verwendet wird und das CDT Plugin installiert ist,  kann das <em>app</em> Verzeichnis in ein Makefile-Projekt importiert werden. Dazu in Eclipse ein neues  Makefile-Projekt mit existierendem Sourcecode erzeugen und den Pfad zur app-Vorlage auswählen. Mit einem Rechtsklick auf das Projekt -&gt; <em>Build Configurations</em> -&gt; <em>Build all</em> können die Quelldateien kompiliert werden. Um die Host-Anwendung direkt in Eclipse auszuführen muss in der <em>Run Configuration</em> die Datei <em>app_host</em> als Anwendung ausgewählt werden. Zusätzlich bieten die optionalen Plugins <em>C/C++ Remote Launch</em> und <em>Remote System Explorer</em> die Möglichkeit die Target-Anwendung auf die Kamera  zu kopieren  und direkt aus Eclipse auszuführen. Dabei ist zu beachten, dass <em>Remote Launch</em> kein kopieren via <code>scp</code> unterstüzt und somit FTP im passiven Modus verwendet werden muss. Sind  beide Plugins installiert kann für die Target-Anwendung eine zweite <em>Run Configuration</em> konfiguriert werden. </p>
+
+<hr><p><strong>Hinweis</strong> Falls Eclipse nicht über die Konsole gestartet wird, kann es vorkommen, dass die bfin-Toolchain nicht gefunden wird und die Fehlermeldung <em>/bin/sh: 1: bfin-uclinux-g++: not found</em> erscheint. In diesem Fall muss Eclipse beendet und über die Konsole neu gestartet werden.</p>
+
+<hr><h3>Hello World</h3>
+
+<p>Als Einstieg in die Entwicklung mit Hilaris dient wie so oft ein einfaches <em>Hello World</em> Beispiel. Wie im nachfolgenden Listing ersichtlich, muss dazu als erstes die Header-Datei <em>Hilaris.h</em> inkuldiert werden. Danach wird mit dem Erstellen des Hilaris-Objekts das Framework geladen und das Camera-Objekt erzeugt. Da beim Aufruf der Methode <code>getCamera()</code> keine Parameter gesetzt sind, werden für die Initialisierung der Kamera Standardeinstellungen, unter anderem der Standard-Debayer, verwendet. Durch Aufruf der Methode <code>captureImage()</code> wird ein Bild aufgenommen und ein Pointer auf das entsprechende Image-Objekt zurückgegeben.  Schlussendlich wird mittels eines Text-Objekts und der Methode <code>drawObject()</code> der Text <em>Hello World</em> auf das Bild gezeichnet. Um das erzeugte Bild anschauen zu können, wird es zum Schluss als Bitmap auf dem Dateisystem abgelegt.</p>
+
+<div class="highlight">
+<pre><span class="cp">#include "Hilaris.h"</span>
+
+<span class="kt">int</span> <span class="n">main</span><span class="p">(</span><span class="kt">int</span> <span class="n">argc</span><span class="p">,</span> <span class="k">const</span> <span class="kt">char</span><span class="o">*</span> <span class="n">argv</span><span class="p">[])</span>
+<span class="p">{</span>
+    <span class="n">Hilaris</span> <span class="n">hilaris</span><span class="p">;</span>
+
+    <span class="c1">//getting camera with standard properties</span>
+    <span class="n">Camera</span><span class="o">*</span> <span class="n">camera</span> <span class="o">=</span> <span class="n">hilaris</span><span class="p">.</span><span class="n">getCamera</span><span class="p">();</span>
+
+    <span class="n">Image</span><span class="o">*</span> <span class="n">image</span> <span class="o">=</span> <span class="n">camera</span><span class="o">-&gt;</span><span class="n">captureImage</span><span class="p">();</span>
+
+    <span class="n">Text</span> <span class="n">t</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="s">"Hello World!"</span><span class="p">,</span> <span class="mh">0xFFFFFF</span><span class="p">,</span> <span class="mh">0x000000</span><span class="p">);</span>
+    <span class="n">image</span><span class="o">-&gt;</span><span class="n">drawObject</span><span class="p">(</span><span class="o">&amp;</span><span class="n">t</span><span class="p">);</span>
+
+    <span class="n">image</span><span class="o">-&gt;</span><span class="n">save</span><span class="p">(</span><span class="s">"helloworld.bmp"</span><span class="p">);</span>
+
+    <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+<span class="p">}</span>
+</pre>
+</div>
+
+
+<p><img src="http://i.imgur.com/VjFcN.jpg" alt="Hello World Image"></p>
+
+<h3>Frameprozessoren</h3>
+
+<p>Um die Verarbeitung eines Bildes sauber vom restliche Programmablauf zu trennen, gibt es in Hilaris 
+sogenannte Frameprozessoren. Diese sind völlig unabhängig von der restlichen
+Anwendung und können gut für andere Anwendungen wiederverwertet werden.</p>
+
+<p>Bevor ein Bild aufgenommen wird, müssen die gewünschten Frameprozessoren der Kamera mit 
+<code>Camera::addFrameProcessor(FrameProcessor* processor)</code> hinzugefügt werden. Sobald nun
+die <code>captureImage()</code>-Methode aufgerufen wird, wird das Bild automatisch vom Frameprozessor verarbeitet,
+bevor es zurückgegeben wird. Die selbst erstellten Frameprozessoren sind im Unterordner <em>processors</em> 
+abzulegen, weshalb die include-Direktive <code>#include "processors/&lt;ProcessorName&gt;.h"</code> lautet. 
+Im folgenden Beispiel wird das Zeichnen des Texts aus dem Hauptprogramm in einen Frameprozessor ausgelagert.</p>
+
+<div class="highlight">
+<pre><span class="cp">#include "Hilaris.h"</span>
+<span class="cp">#include "processors/HelloWorldProcessor.h"</span>
+
+<span class="kt">int</span> <span class="n">main</span><span class="p">(</span><span class="kt">int</span> <span class="n">argc</span><span class="p">,</span> <span class="k">const</span> <span class="kt">char</span><span class="o">*</span> <span class="n">argv</span><span class="p">[])</span>
+<span class="p">{</span>
+    <span class="n">Hilaris</span> <span class="n">hilaris</span><span class="p">;</span>
+
+    <span class="c1">//getting camera with standard properties</span>
+    <span class="n">Camera</span><span class="o">*</span> <span class="n">camera</span> <span class="o">=</span> <span class="n">hilaris</span><span class="p">.</span><span class="n">getCamera</span><span class="p">();</span>
+
+    <span class="n">camera</span><span class="o">-&gt;</span><span class="n">addFrameProcessor</span><span class="p">(</span><span class="k">new</span> <span class="n">HelloWorldProcessor</span><span class="p">());</span>
+
+    <span class="n">Image</span><span class="o">*</span> <span class="n">image</span> <span class="o">=</span> <span class="n">camera</span><span class="o">-&gt;</span><span class="n">captureImage</span><span class="p">();</span>
+
+    <span class="n">image</span><span class="o">-&gt;</span><span class="n">save</span><span class="p">(</span><span class="s">"helloworld.bmp"</span><span class="p">);</span>
+
+    <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+<span class="p">}</span>
+</pre>
+</div>
+
+
+<p>Ein Frameprozessor muss die Klasse <em>FrameProcessor</em> erweitern und die Methode <code>process()</code> überschreiben, 
+hat aber sonst keinerlei Einschränkungen. Auch hier wird die include-Direktive 
+<code>#include "Hilaris.h"</code> benötigt, wie dies bei allen Klassen in Hilaris der Fall ist.
+Für den <em>HelloWorldProcessor</em> sieht das wie im folgenden Listing aus. </p>
+
+<div class="highlight">
+<pre><span class="cp">#include "Hilaris.h"</span>
+
+<span class="k">class</span> <span class="nc">HelloWorldProcessor</span> <span class="o">:</span> <span class="k">public</span> <span class="n">FrameProcessor</span>
+<span class="p">{</span>
+    <span class="k">public</span><span class="o">:</span>
+        <span class="n">Image</span><span class="o">*</span> <span class="n">process</span><span class="p">(</span><span class="n">Image</span><span class="o">*</span> <span class="n">image</span><span class="p">);</span>   
+<span class="p">};</span>
+</pre>
+</div>
+
+
+<p>Das Verarbeiten des Bildes, beziehungsweise in diesem Beispiel das Zeichnen des Texts, geschieht nun in
+der Implementierung der <code>process()</code>-Methode. Das nächste Listing zeigt, wie das im Beispiel des 
+HelloWorldProcessors aussieht.</p>
+
+<div class="highlight">
+<pre><span class="cp">#include "HelloWorldProcessor.h"</span>
+
+<span class="n">Image</span><span class="o">*</span> <span class="n">HelloWorldProcessor</span><span class="o">::</span><span class="n">process</span><span class="p">(</span><span class="n">Image</span><span class="o">*</span> <span class="n">image</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="n">Text</span> <span class="n">t</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="s">"Hello World!"</span><span class="p">,</span> <span class="mh">0xFFFFFF</span><span class="p">,</span> <span class="mh">0x000000</span><span class="p">);</span>
+
+    <span class="n">image</span><span class="o">-&gt;</span><span class="n">drawObject</span><span class="p">(</span><span class="o">&amp;</span><span class="n">t</span><span class="p">);</span>
+
+    <span class="k">return</span> <span class="n">image</span><span class="p">;</span>
+<span class="p">}</span>
+</pre>
+</div>
+
+
+<h3>StreamServer</h3>
+
+<p>In vielen Fällen kann es sehr interessant sein die Bilder, welche die Kamera verarbeitet, in einem Stream
+zu beobachten. Für diesen Zweck wurde der sogenannte <em>StreamServer</em> entwickelt. Die Kamera kann wie bis
+anhin mit einem Debayer und verschiedenen Frameprozessoren ausgestattet werden. Anstatt jedoch die Bilder 
+selbst in der main-Methode aufzunehmen, kann die Kamera dem StreamServer übergeben werden. Sobald dieser
+gestartet wird, beginnt er Bilder aufzunehmen, zu verarbeiten und danach an alle verbundenen Clients zu versenden.
+Ein einfaches Beispiel könnte wie im folgenden Listing aussehen.</p>
+
+<div class="highlight">
+<pre><span class="cp">#include "Hilaris.h"</span>
+<span class="cp">#include "processors/HelloWorldProcessor.h"</span>
+
+<span class="kt">int</span> <span class="n">main</span><span class="p">(</span><span class="kt">int</span> <span class="n">argc</span><span class="p">,</span> <span class="k">const</span> <span class="kt">char</span><span class="o">*</span> <span class="n">argv</span><span class="p">[])</span>
+<span class="p">{</span>
+    <span class="n">Hilaris</span> <span class="n">hilaris</span><span class="p">;</span>
+
+    <span class="c1">//getting camera with standard properties</span>
+    <span class="n">Camera</span><span class="o">*</span> <span class="n">camera</span> <span class="o">=</span> <span class="n">hilaris</span><span class="p">.</span><span class="n">getCamera</span><span class="p">();</span>
+
+    <span class="n">camera</span><span class="o">-&gt;</span><span class="n">addFrameProcessor</span><span class="p">(</span><span class="k">new</span> <span class="n">HelloWorldProcessor</span><span class="p">());</span>
+
+    <span class="n">StreamServer</span> <span class="n">s</span><span class="p">(</span><span class="n">camera</span><span class="p">);</span>
+    <span class="n">s</span><span class="p">.</span><span class="n">start</span><span class="p">();</span>
+
+    <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+<span class="p">}</span>
+</pre>
+</div>
+
+
+<p>Um nun zu testen ob der StreamServer auch wirklich läuft, kann mit folgendem Befehl eine Verbindung
+zur Kamera hergestellt und der Stream angezeigt werden:</p>
+
+<pre><code>nc &lt;IP-Kamera &gt; 9003 | mplayer --demuxer rawvideo -rawvideo w=376:h=240:format=BGR24:fps=100 -vo x11
+</code></pre>
+
+<h3>Wichtige Funktionen</h3>
+
+<p>Im folgenden Kapitel wird kurz auf die wichtigsten Funktionen diverser Klassen von Hilaris eingegangen.
+Eine detailiere Beschreibung sämtlicher Funktionen kann der API-Referenz entnommen werden.</p>
+
+<h4>Hilaris</h4>
+
+<div class="highlight">
+<pre><span class="c1">// Camera mit Standardeinstellungen erzeugen </span>
+<span class="n">Camera</span><span class="o">*</span> <span class="n">Hilaris</span><span class="o">::</span><span class="n">getCamera</span><span class="p">();</span>
+
+<span class="c1">// Camera mit gewünschtem Debayer erzeugen </span>
+<span class="n">Camera</span><span class="o">*</span> <span class="n">Hilaris</span><span class="o">::</span><span class="n">getCamera</span><span class="p">(</span><span class="n">Debayer</span><span class="o">*</span> <span class="n">debayer</span><span class="p">);</span>
+
+<span class="c1">// Camera mit selbst definierter Area of Interest erzeugen </span>
+<span class="n">Camera</span><span class="o">*</span> <span class="n">Hilaris</span><span class="o">::</span><span class="n">getCamera</span><span class="p">(</span>
+<span class="n">uint16</span> <span class="n">lowX</span><span class="p">,</span> 
+<span class="n">uint16</span> <span class="n">lowY</span><span class="p">,</span> 
+<span class="n">uint16</span> <span class="n">width</span><span class="p">,</span> 
+<span class="n">uint16</span> <span class="n">height</span><span class="p">);</span>
+
+<span class="c1">// Camera mit selbst definierter Area of Interest,</span>
+<span class="c1">// gewünschtem Debayer, sowie Anzahl Buffer erzeugen</span>
+<span class="n">Camera</span><span class="o">*</span> <span class="n">Hilaris</span><span class="o">::</span><span class="n">getCamera</span><span class="p">(</span>
+<span class="n">uint16</span> <span class="n">lowX</span><span class="p">,</span> 
+<span class="n">uint16</span> <span class="n">lowY</span><span class="p">,</span> 
+<span class="n">uint16</span> <span class="n">width</span><span class="p">,</span> 
+<span class="n">uint16</span> <span class="n">height</span><span class="p">,</span> 
+<span class="n">Debayer</span><span class="o">*</span> <span class="n">debayer</span><span class="p">,</span> 
+<span class="n">uint8</span> <span class="n">bufferSize</span><span class="p">);</span>
+
+<span class="c1">// Zurücksetzen des Camera Objekts um ein Neues zu erzeugen</span>
+<span class="kt">void</span> <span class="n">Hilaris</span><span class="o">::</span><span class="n">resetCamera</span><span class="p">();</span>
+
+<span class="c1">// Einstellung des Log-Levels, welcher auf der Konsole ausgegeben wird</span>
+<span class="kt">void</span> <span class="n">Hilaris</span><span class="o">::</span><span class="n">setConsoleLogLevel</span><span class="p">(</span><span class="k">const</span> <span class="k">enum</span> <span class="n">Debug</span><span class="o">::</span><span class="n">Level</span> <span class="n">level</span><span class="p">);</span>
+
+<span class="c1">// Einstellung des Log-Levels, welcher in die Log-Datei geschrieben wird</span>
+<span class="kt">void</span> <span class="n">Hilaris</span><span class="o">::</span><span class="n">setFileLogLevel</span><span class="p">(</span><span class="k">const</span> <span class="k">enum</span> <span class="n">Debug</span><span class="o">::</span><span class="n">Level</span> <span class="n">level</span><span class="p">);</span>
+
+<span class="c1">// Zugriff auf die Instanz des IO Objekts</span>
+<span class="n">IO</span><span class="o">*</span> <span class="n">Hilaris</span><span class="o">::</span><span class="n">io</span><span class="p">();</span>
+</pre>
+</div>
+
+
+<h4>Camera</h4>
+
+<div class="highlight">
+<pre><span class="c1">// Bild aufnehmen und mit zuvor definiertem Debayer verarbeiten</span>
+<span class="n">Image</span><span class="o">*</span> <span class="n">Camera</span><span class="o">::</span><span class="n">captureImage</span><span class="p">();</span>
+
+<span class="c1">// Automatische Belichtungszeit ein- oder ausschalten</span>
+<span class="kt">bool</span> <span class="n">Camera</span><span class="o">::</span><span class="n">setAutoExposure</span><span class="p">(</span><span class="kt">bool</span> <span class="n">enabled</span><span class="p">);</span>
+
+<span class="c1">// Belichtungszeit in Mikrosekunden einstellen</span>
+<span class="kt">bool</span> <span class="n">Camera</span><span class="o">::</span><span class="n">setShutterWidth</span><span class="p">(</span><span class="n">uint32</span> <span class="n">width</span><span class="p">);</span>
+
+<span class="c1">// Ausrichtung des Bildes einstellen</span>
+<span class="kt">bool</span> <span class="n">Camera</span><span class="o">::</span><span class="n">setPerspective</span><span class="p">(</span><span class="k">enum</span> <span class="n">Camera</span><span class="o">::</span><span class="n">Perspective</span> <span class="n">perspective</span><span class="p">);</span>
+
+<span class="c1">// FrameProcessor hinzufügen, welcher bei captureImage() aufgerufen wird</span>
+<span class="kt">bool</span> <span class="n">Camera</span><span class="o">::</span><span class="n">addFrameProcessor</span><span class="p">(</span><span class="n">FrameProcessor</span><span class="o">*</span> <span class="n">proc</span><span class="p">);</span>
+</pre>
+</div>
+
+
+<h4>Image</h4>
+
+<div class="highlight">
+<pre><span class="c1">// Bild als Bitmap speichern</span>
+<span class="kt">void</span> <span class="n">Image</span><span class="o">::</span><span class="n">save</span><span class="p">(</span><span class="k">const</span> <span class="kt">char</span><span class="o">*</span> <span class="n">path</span><span class="p">);</span>
+
+<span class="c1">// Objekte eines Overlays auf das Bild zeichnen</span>
+<span class="kt">void</span> <span class="n">Image</span><span class="o">::</span><span class="n">drawOverlay</span><span class="p">(</span><span class="n">Overlay</span><span class="o">*</span> <span class="n">overlay</span><span class="p">);</span>
+
+<span class="c1">// Einzelnes Objekt auf das Bild zeichnen</span>
+<span class="kt">void</span> <span class="n">Image</span><span class="o">::</span><span class="n">drawObject</span><span class="p">(</span><span class="n">DrawableObject</span><span class="o">*</span> <span class="n">object</span><span class="p">);</span>
+
+<span class="c1">// Breite eines Bildes erhalten</span>
+<span class="n">uint16</span> <span class="n">Image</span><span class="o">::</span><span class="n">getWidth</span><span class="p">();</span>
+
+<span class="c1">// Höhe eines Bildes erhalten</span>
+<span class="n">uint16</span> <span class="n">Image</span><span class="o">::</span><span class="n">getHeight</span><span class="p">();</span>
+
+<span class="c1">// Maximale Breite eines Bildes</span>
+<span class="kt">int</span> <span class="n">Image</span><span class="o">::</span><span class="n">MAX_WIDTH</span><span class="p">;</span>
+
+<span class="c1">// Maximale Höhe eines Bildes</span>
+<span class="kt">int</span> <span class="n">Image</span><span class="o">::</span><span class="n">MAX_HEIGHT</span><span class="p">;</span>
+</pre>
+</div>
+
+
+<div class="highlight">
+<pre><span class="c1">// Auslesen oder setzen eines Pixels</span>
+<span class="n">uint8</span><span class="o">&amp;</span> <span class="n">GreyscaleImage</span><span class="o">::</span><span class="n">pixel</span><span class="p">(</span><span class="n">uint16</span> <span class="n">x</span><span class="p">,</span> <span class="n">uint16</span> <span class="n">y</span><span class="p">);</span>
+<span class="n">uint8</span><span class="o">&amp;</span> <span class="n">GreyscaleImage</span><span class="o">::</span><span class="k">operator</span><span class="p">()(</span><span class="n">uint16</span> <span class="n">x</span><span class="p">,</span> <span class="n">uint16</span> <span class="n">y</span><span class="p">);</span>
+
+<span class="c1">// Konvertierung von GreyscaleImage nach BinaryImage</span>
+<span class="n">BinaryImage</span><span class="o">*</span> <span class="n">GreyscaleImage</span><span class="o">::</span><span class="n">convert</span><span class="p">(</span>
+<span class="n">BinaryImage</span><span class="o">*</span> <span class="n">binary</span><span class="p">,</span> 
+<span class="n">uint8</span> <span class="n">threshold</span> <span class="o">=</span> <span class="mi">127</span><span class="p">,</span> 
+<span class="kt">bool</span> <span class="n">darkIsForeground</span> <span class="o">=</span> <span class="kc">false</span><span class="p">);</span>
+
+<span class="c1">// Filerkernel (GAUSS3X3, GAUSS5X5, MEDIAN3X3, MEDIAN5X5) auf Bild anwenden</span>
+<span class="kt">bool</span> <span class="n">GreyscaleImage</span><span class="o">::</span><span class="n">filter</span><span class="p">(</span><span class="k">struct</span> <span class="n">OSC_VIS_FILTER_KERNEL</span> <span class="o">*</span><span class="n">kernel</span><span class="p">);</span>
+
+<span class="c1">// Kantendetektion auf einem Graustufenbild</span>
+<span class="kt">bool</span> <span class="n">GreyscaleImage</span><span class="o">::</span><span class="n">sobel</span><span class="p">(</span><span class="n">uint8</span> <span class="n">exp</span> <span class="o">=</span> <span class="mi">10</span><span class="p">);</span>
+</pre>
+</div>
+
+
+<div class="highlight">
+<pre><span class="c1">// Binärbild invertieren</span>
+<span class="kt">void</span> <span class="n">BinaryImage</span><span class="o">::</span><span class="n">invert</span><span class="p">();</span>
+
+<span class="c1">// Zwei Binärbilder voneinander subtrahieren</span>
+<span class="kt">void</span> <span class="n">BinaryImage</span><span class="o">::</span><span class="n">subtract</span><span class="p">(</span><span class="n">BinaryImage</span><span class="o">*</span> <span class="n">img</span><span class="p">);</span>
+
+<span class="c1">// Erosion auf einem Binärbild mit Strukturelement (DISK0, DISK1, DISK2, DISK8)</span>
+<span class="kt">bool</span> <span class="n">BinaryImage</span><span class="o">::</span><span class="n">erode</span><span class="p">(</span><span class="k">struct</span> <span class="n">OSC_VIS_STREL</span> <span class="o">*</span><span class="n">strel</span><span class="p">,</span> <span class="n">uint8</span> <span class="n">repetitions</span> <span class="o">=</span> <span class="mi">1</span><span class="p">);</span>
+
+<span class="c1">// Dilatation auf einem Binärbild mit Strukturelement</span>
+<span class="kt">bool</span> <span class="n">BinaryImage</span><span class="o">::</span><span class="n">dilate</span><span class="p">(</span><span class="k">struct</span> <span class="n">OSC_VIS_STREL</span> <span class="o">*</span><span class="n">strel</span><span class="p">,</span> <span class="n">uint8</span> <span class="n">repetitions</span> <span class="o">=</span> <span class="mi">1</span><span class="p">);</span>
+
+<span class="c1">// Finden und kennzeichnen der einzelnen Segmente in einem Binärbild</span>
+<span class="kt">bool</span> <span class="n">BinaryImage</span><span class="o">::</span><span class="n">label</span><span class="p">();</span>
+
+<span class="c1">// Schwerpunkt aller Segmente im Bild markieren</span>
+<span class="kt">bool</span> <span class="n">BinaryImage</span><span class="o">::</span><span class="n">drawCentroid</span><span class="p">();</span>
+
+<span class="c1">// Box um jedes der Segmente zeichnen</span>
+<span class="kt">bool</span> <span class="n">BinaryImage</span><span class="o">::</span><span class="n">drawBoundingBox</span><span class="p">();</span>
+</pre>
+</div>
+
+
+<h4>IO</h4>
+
+<div class="highlight">
+<pre><span class="c1">// Gewünschter Pin (IN1, IN2, OUT1, OUT2) aktivieren oder deaktivieren</span>
+<span class="kt">bool</span> <span class="n">IO</span><span class="o">::</span><span class="n">write</span><span class="p">(</span><span class="k">enum</span> <span class="n">IO</span><span class="o">::</span><span class="n">Pin</span> <span class="n">pin</span><span class="p">,</span> <span class="kt">bool</span> <span class="n">active</span><span class="p">);</span>
+
+<span class="c1">// Von gewünschtem Pin lesen</span>
+<span class="kt">bool</span> <span class="n">IO</span><span class="o">::</span><span class="n">read</span><span class="p">(</span><span class="k">enum</span> <span class="n">IO</span><span class="o">::</span><span class="n">Pin</span> <span class="n">pin</span><span class="p">);</span>
+
+<span class="c1">// Zugriff auf LED-Instanz</span>
+<span class="n">Led</span><span class="o">*</span> <span class="n">IO</span><span class="o">::</span><span class="n">led</span><span class="p">();</span>
+
+<span class="c1">// LED einschalten</span>
+<span class="kt">bool</span> <span class="n">Led</span><span class="o">::</span><span class="n">on</span><span class="p">();</span>
+
+<span class="c1">// LED mit bestimmter Farbe einschalten</span>
+<span class="kt">bool</span> <span class="n">Led</span><span class="o">::</span><span class="n">on</span><span class="p">(</span><span class="n">uint8</span> <span class="n">red</span><span class="p">,</span> <span class="n">uint8</span> <span class="n">green</span><span class="p">);</span>
+
+<span class="c1">// Farbe des LED setzen</span>
+<span class="kt">bool</span> <span class="n">Led</span><span class="o">::</span><span class="n">setColor</span><span class="p">(</span><span class="n">uint8</span> <span class="n">red</span><span class="p">,</span> <span class="n">uint8</span> <span class="n">green</span><span class="p">);</span>
+
+<span class="c1">// LED ausschalten</span>
+<span class="kt">bool</span> <span class="n">Led</span><span class="o">::</span><span class="n">off</span><span class="p">();</span>
+</pre>
+</div>
+
+
+<h4>Debayer</h4>
+
+<p>Die Debayer-Klassen stellen keine Funktionalität zur Verfügung, welche direkt verwendet 
+werden kann. Folgend jedoch eine Liste der wichtigsten Debayer mit ihren Eigenschaften.</p>
+
+<ul>
+<li>
+<strong>DebayerBGRFast</strong>: Erzeugt ein <em>BGRImage</em> mit halber Breite sowie halber Höhe. Dieser Debayer wird standardmässig verwendet, wenn kein Debayer spezifiziert wurde.</li>
+<li>
+<strong>DebayerBGRHalfsize</strong>: Erzeugt ein <em>BGRImage</em> mit halber Breite sowie halber Höhe.</li>
+<li>
+<strong>DebayerBGRBilinear</strong>: Erzeugt ein <em>BGRImage</em> mit voller Grösse.</li>
+<li>
+<strong>DebayerBGRStandard</strong>: Erzeugt ein <em>BGRImage</em> mit voller Grösse.</li>
+<li>
+<strong>DebayerGreyscaleFast</strong>: Erzeugt ein <em>GreyscaleImage</em> mit halber Breite sowie halber Höhe.</li>
+<li>
+<strong>DebayerGreyscaleHalfsize</strong>: Erzeugt ein <em>GreyscaleImage</em> mit halber Breite und Höhe.</li>
+<li>
+<strong>DebayerGreyscaleVector</strong>: Erzeugt ein <em>GreyscaleImage</em> mit halber Breite und halber Höhe.</li>
+<li>
+<strong>DebayerRGBStandard</strong>: Erzeugt ein <em>RGBImage</em> mit halber Breite und Höhe.</li>
+<li>
+<strong>DebayerRaw</strong>: Erzeugt ein undverarbeitets <em>RawImage</em> welches nur aus Rohdaten besteht.</li>
+</ul>
+      </section>
+    </div>
+
+    <!-- FOOTER  -->
+    <div id="footer_wrap" class="outer">
+      <footer class="inner">
+        <p class="copyright">Hilaris Application maintained by <a href="https://github.com/hilaris">hilaris</a></p>
+        <p>Published with <a href="http://pages.github.com">GitHub Pages</a></p>
+      </footer>
+    </div>
+
+    
+
+  </body>
+</html>
