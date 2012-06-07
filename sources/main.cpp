@@ -3,37 +3,16 @@
 int main(int argc, const char* argv[])
 {
 	Hilaris hilaris;
-	hilaris.setConsoleLogLevel(Debug::ALERT);
-	uint32 cyclesStart, cyclesEnd;
 	
-	OscSupWdtInit();
+	//write your code here and have fun ;) hilari(ou)s...isn't it?
 	
-	cyclesStart = OscSupCycGet();
-	Camera* cam = hilaris.getCamera(new DebayerBGRFast());
-	cyclesEnd = OscSupCycGet();
+	Camera* cam = hilaris.getCamera(new DebayerGreyscaleFast());
 	
-	printf("time to load camera: %dus\n", OscSupCycToMicroSecs(cyclesEnd - cyclesStart));
+	Image* img = cam->captureImage();
 
-	int i;
-	uint32 total = 0;
-	Image* image;
+	((GreyscaleImage*)img)->sobel(7);
 	
-	for(i=0; i<1000;i++)
-	{
-		OscSupWdtKeepAlive();
-		cyclesStart = OscSupCycGet();
-		image = cam->captureImage();
-		cyclesEnd = OscSupCycGet();
-		
-		uint32 time = OscSupCycToMicroSecs(cyclesEnd - cyclesStart);
-		total += time;
-		
-		printf("image %d taken in %dus\n", i, time);
-	}
-	
-	printf("average time to capture an image %dus\n", total/1000);
-	
-	OscSupWdtClose();
+	img->save("sobel.bmp");
 	
 	return 0;	
 }
